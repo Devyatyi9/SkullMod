@@ -6,7 +6,7 @@ from . import export_lvl, import_lvl
 bl_info = {
     "name": "SkullGirls .lvl plugin",
     "author": "0xFAIL",
-    "version": (0, 5, 0),
+    "version": (0, 5, 1),
     "blender": (2, 72, 0),
     "category": "Import-Export",
     "location": "File > Import/Export",

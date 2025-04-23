@@ -238,9 +238,9 @@ def get_material(path, name):
         return bpy.data.materials[name]
     except KeyError:  # Not found # TODO error handling!
         print("Material " + name + " not found, making a new one")
-    # Load image (you are expected to have levels-textures.gfs extracted)
-    texture_path = os.path.normpath(os.path.join(path, os.pardir, os.pardir, os.pardir, os.pardir,
-                                                 'levels-textures', 'temp', 'levels', 'textures', name + '.dds'))
+    # Load image (you are expected to have stages-textures.gfs extracted)
+    texture_path = os.path.normpath(os.path.join(path, os.pardir, os.pardir, os.pardir,
+                                                 'stages-textures', 'stages', 'textures', name + '.dds'))
     try:
         image = bpy.data.images.load(texture_path)
     except:
