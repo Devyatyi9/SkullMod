@@ -5,6 +5,39 @@ from bpy.props import (CollectionProperty,
 from bpy_extras.io_utils import (ImportHelper,
                                  ExportHelper)
 
+# Добавляем полифиллы для методов, удаленных в Blender 4.1+
+def apply_compatibility_patches():
+    """Добавляет совместимость с API Blender 4.0 и ниже"""
+    # Проверяем, нужны ли патчи (работаем ли мы в Blender 4.1+)
+    blender_version = bpy.app.version
+    needs_patches = blender_version[0] > 4 or (blender_version[0] == 4 and blender_version[1] >= 1)
+    
+    if not needs_patches:
+        return
+        
+    # Добавляем патч для split_normals_calc
+    if not hasattr(bpy.types.Mesh, 'split_normals_calc'):
+        def split_normals_calc_polyfill(self):
+            print("Using patched split_normals_calc method")
+            if hasattr(self, 'calc_normals_split'):
+                return self.calc_normals_split()
+            print("Warning: Cannot calculate split normals in this Blender version")
+        bpy.types.Mesh.split_normals_calc = split_normals_calc_polyfill
+    
+    # Добавляем патч для create_normals_split если такого метода нет
+    if not hasattr(bpy.types.Mesh, 'create_normals_split'):
+        def create_normals_split_polyfill(self):
+            print("Using patched create_normals_split method")
+            # В новых версиях это делается автоматически
+            pass
+        bpy.types.Mesh.create_normals_split = create_normals_split_polyfill
+    
+    # Другие патчи по необходимости...
+    print("Applied compatibility patches for Blender 4.1+ API changes")
+
+# Применяем патчи при импорте модуля
+apply_compatibility_patches()
+
 bl_info = {
     "name": "Skullgirls .lvl plugin",
     "author": "0xFAIL",
