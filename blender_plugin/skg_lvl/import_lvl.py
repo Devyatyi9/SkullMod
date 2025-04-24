@@ -255,11 +255,8 @@ def get_material(path, name):
     # For shadeless appearance (like the original)
     bsdf_node.inputs['Specular IOR Level'].default_value = 0.0
     bsdf_node.inputs['Roughness'].default_value = 1.0
-    # Устанавливаем нулевые значения для Coat и Sheen, чтобы убрать отражения
-    bsdf_node.inputs['Coat Weight'].default_value = 0.0
-    bsdf_node.inputs['Sheen Weight'].default_value = 0.0 
-    bsdf_node.inputs['Sheen Tint'].default_value = (0.0, 0.0, 0.0, 1.0) # Оставляем RGBA для Sheen Tint
-    
+    bsdf_node.inputs['Sheen Tint'].default_value = (0.0, 0.0, 0.0, 1.0)
+        
     # Connect texture to shader
     links = mat.node_tree.links
     links.new(tex_node.outputs['Color'], bsdf_node.inputs['Base Color'])
