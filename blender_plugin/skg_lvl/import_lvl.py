@@ -213,9 +213,27 @@ def get_material(path, name):
         print("Material " + name + " not found, making a new one")
     
     # Load image (you are expected to have stages-textures.gfs extracted)
-    texture_path = os.path.normpath(os.path.join(path, os.pardir, os.pardir, os.pardir,
-                                                 'stages-textures', 'stages', 'textures', name + '.dds'))
+    # texture_path = os.path.normpath(os.path.join(path, os.pardir, os.pardir, os.pardir,
+    #                                              'stages-textures', 'stages', 'textures', name + '.dds'))
+    texture_candidates = [
+    os.path.normpath(os.path.join(path, os.pardir, os.pardir, os.pardir,
+                 'stages-textures', 'stages', 'textures', name + '.dds')),
+    os.path.normpath(os.path.join(path, os.pardir, os.pardir, os.pardir, os.pardir,
+                                  'levels-textures', 'temp', 'levels', 'textures', name + '.dds')),
+    os.path.normpath(os.path.join(path, os.pardir, os.pardir, os.pardir, os.pardir,
+                                  'levels', 'temp', 'levels', 'textures', name + '.dds'))
+    ]
+
+    # Ищем первый существующий файл
+    found_texture_path = None
+    for candidate in texture_candidates:
+        if os.path.isfile(candidate):
+            found_texture_path = candidate
+            break
     
+    # Используем найденный путь или оригинальный, если ничего не найдено
+    texture_path = found_texture_path if found_texture_path else texture_candidates[0]
+
     try:
         # Используем безопасную загрузку изображения
         image = None
