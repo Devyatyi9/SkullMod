@@ -41,7 +41,7 @@ apply_compatibility_patches()
 bl_info = {
     "name": "Skullgirls .lvl plugin",
     "author": "0xFAIL",
-    "version": (0, 6, 1),
+    "version": (0, 6, 2),
     "blender": (4, 2, 0),
     "category": "Import-Export",
     "location": "File > Import/Export",
